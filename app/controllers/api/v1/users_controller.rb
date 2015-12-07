@@ -1,5 +1,6 @@
 class Api::V1::UsersController < ApplicationController
     def index
+        authenticate_request! #completely blocks the endpoint
         render(
             root: false,
             json: User.all,

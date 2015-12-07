@@ -34,3 +34,12 @@ Movement.create({
     ranking_value: 1,
     user_id: 1
     })
+
+
+curl -H "Content-Type: application/json" -X POST -d '{"email":"dshvimer@gmail.com","name":"David Shvimer"}' http://localhost:3000/authenticate | python -mjson.tool
+
+{
+    ..,
+    ..,
+
+}

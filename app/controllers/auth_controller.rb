@@ -1,12 +1,21 @@
 require "auth_token"
 class AuthController < ApplicationController
   def authenticate
-    user = User.find_by_credentials(params[:email], params[:name])
+    user = User.find_by_credentials(params[:email], params[:password])
     if user
       render json: authentication_payload(user)
     else
       render json: { errors: ['Invalid username or password'] }, status: :unauthorized
     end
+  end
+
+  def reset_password
+    email = params[:email]
+    user = User.find_by_email(email)
+    user.send_password_reset
+    render(
+        json: {message: "Password reset was sent to: " + email}
+    )
   end
 
   private

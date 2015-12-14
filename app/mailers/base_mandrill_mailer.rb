@@ -9,7 +9,7 @@ class BaseMandrillMailer < ActionMailer::Base
   private
 
   def send_mail(email, subject, body)
-    mail(to: email, subject: subject, body: body, content_type: "text/html").deliver_now
+    mail(to: email, subject: subject, body: body, content_type: "text/html").deliver
   end
 
   # def mandrill_template(template_name, attributes)

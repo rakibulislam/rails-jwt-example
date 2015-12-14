@@ -41,7 +41,7 @@ class ApplicationController < ActionController::Base
     def forbidden_resource
         render json: { errors: ['Not Authorized To Access Resource'] }, status: :forbidden
     end
-    
+
     def user_not_authenticated
         render json: { errors: ['Not Authenticated'] }, status: :unauthorized
     end

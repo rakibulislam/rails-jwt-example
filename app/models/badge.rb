@@ -2,24 +2,18 @@ class Badge < ActiveRecord::Base
 
     belongs_to :user
 
-    # before_save :overall_ranking
+    # after_save :user_calc_overall_ranking
 
-    # def overall_ranking
-    #     if user.badges.present?
-    #         overall_ranking = 0
-    #         user.badges.each do |badge|
-    #             overall_ranking += badge.ranking_value
-    #         end
-    #         overall_ranking /= user.badges.count
-    #         user.overall_ranking = overall_ranking
-    #     else
-    #         user.overall_ranking = ranking_value
-    #     end
-    #     user.save
-    # end
 
-    # def overall_ranking
-    #     self.user.save
-    # end
+    private
+    def user_calc_overall_ranking
+        sum = 0
+        user.badges.each do |badge|
+          sum += badge.ranking_value
+        end
+        binding.pry
+        user.overall_ranking = sum / user.badges.count
+        user.save
+    end
 
 end

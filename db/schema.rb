@@ -11,29 +11,31 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151207161447) do
+ActiveRecord::Schema.define(version: 20151214024616) do
+
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
 
   create_table "badges", force: :cascade do |t|
     t.string   "name"
     t.string   "description"
     t.integer  "value"
     t.string   "ranking"
-    t.integer  "ranking_value"
     t.integer  "user_id"
-    t.datetime "created_at",    null: false
-    t.datetime "updated_at",    null: false
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
   end
 
   create_table "users", force: :cascade do |t|
     t.string   "email"
     t.string   "phone"
     t.string   "home_gym"
-    t.datetime "created_at",      null: false
-    t.datetime "updated_at",      null: false
+    t.datetime "created_at",                    null: false
+    t.datetime "updated_at",                    null: false
     t.string   "first_name"
     t.string   "last_name"
     t.string   "password_digest"
-    t.float    "overall_ranking"
+    t.float    "overall_ranking", default: 0.0, null: false
   end
 
 end

@@ -12,10 +12,11 @@ class AuthController < ApplicationController
   def reset_password
     email = params[:email]
     user = User.find_by_email(email)
-    user.send_password_reset
-    render(
-        json: {message: "Password reset was sent to: " + email}
-    )
+    if user.send_password_reset
+      render(
+          json: {message: "Password reset was sent to: " + email}
+      )
+    end
   end
 
   private

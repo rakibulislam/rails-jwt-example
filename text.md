@@ -1,5 +1,3 @@
-rails g model User name:string email:string phone:string home_gym:string overall_ranking:int
-rails g model Badge name:string description:string value:int ranking:string ranking_value:int
 
 
 User.create({
@@ -9,7 +7,7 @@ User.create({
     password: "pass",
     password_confirmation: "pass",
     phone: "3138984244",
-    home_gym: "Some Gym",
+    home_gym: "Some Gym"
 })
 
 Badge.create({
@@ -37,12 +35,3 @@ Badge.create({
     ranking_value: 1,
     user_id: 1
     })
-
-
-curl -H "Content-Type: application/json" -X POST -d '{"email":"dshvimer@gmail.com","name":"David Shvimer"}' http://localhost:3000/authenticate | python -mjson.tool
-
-{
-    ..,
-    ..,
-
-}

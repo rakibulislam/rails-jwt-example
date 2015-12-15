@@ -5,8 +5,8 @@ Rails.application.routes.draw do
 
     namespace :api do
       namespace :v1 do
-        resources :badges
         resources :users
+        patch 'users/:id/badges' => 'badges#update'
       end
     end
 end

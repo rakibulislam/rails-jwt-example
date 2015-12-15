@@ -42,7 +42,7 @@ class User < ActiveRecord::Base
           name: m[0],
           description: m[1],
           ranking: "Unranked",
-          value: 0,
+          ranking_value: 0,
           user_id: self.id
         }
         Badge.create(new_badge)

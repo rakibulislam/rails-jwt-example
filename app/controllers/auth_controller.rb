@@ -14,7 +14,7 @@ class AuthController < ApplicationController
     user = User.find_by_email(email)
     if user.send_password_reset
       render(
-          json: {message: "Password reset was sent to: " + email}
+          json: {message: "New password was sent to: " + email}
       )
     end
   end

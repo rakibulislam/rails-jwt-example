@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151214024616) do
+ActiveRecord::Schema.define(version: 20151215180912) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -22,8 +22,9 @@ ActiveRecord::Schema.define(version: 20151214024616) do
     t.integer  "value"
     t.string   "ranking"
     t.integer  "user_id"
-    t.datetime "created_at",  null: false
-    t.datetime "updated_at",  null: false
+    t.datetime "created_at",    null: false
+    t.datetime "updated_at",    null: false
+    t.integer  "ranking_value"
   end
 
   create_table "users", force: :cascade do |t|
@@ -36,6 +37,7 @@ ActiveRecord::Schema.define(version: 20151214024616) do
     t.string   "last_name"
     t.string   "password_digest"
     t.float    "overall_ranking", default: 0.0, null: false
+    t.string   "gender"
   end
 
 end

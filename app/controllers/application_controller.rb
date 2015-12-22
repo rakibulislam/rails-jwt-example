@@ -2,6 +2,8 @@ class AccessDeniedError < StandardError
 end
 class NotAuthenticatedError < StandardError
 end
+class NotAuthorizedError < StandardError
+end
 class AuthenticationTimeoutError < StandardError
 end
 class ApplicationController < ActionController::Base
@@ -13,6 +15,16 @@ class ApplicationController < ActionController::Base
     def authenticate_request!
         fail NotAuthenticatedError unless user_id_included_in_auth_token?
         @current_user = User.find(decoded_auth_token[:user_id])
+        rescue JWT::ExpiredSignature
+            raise AuthenticationTimeoutError
+        rescue JWT::VerificationError, JWT::DecodeError
+            raise NotAuthenticatedError
+    end
+
+    def authorize_request!
+        fail NotAuthenticatedError unless user_id_included_in_auth_token?
+        @current_user = User.find(decoded_auth_token[:user_id])
+        fail NotAuthorizedError unless @current_user.id.to_s == params[:id]
         rescue JWT::ExpiredSignature
             raise AuthenticationTimeoutError
         rescue JWT::VerificationError, JWT::DecodeError
@@ -44,5 +56,9 @@ class ApplicationController < ActionController::Base
 
     def user_not_authenticated
         render json: { errors: ['Not Authenticated'] }, status: :unauthorized
+    end
+
+    def resource_not_found
+      render json: {message: "Not Found"}, status: :not_found
     end
 end

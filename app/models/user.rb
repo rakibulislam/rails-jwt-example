@@ -22,30 +22,28 @@ class User < ActiveRecord::Base
     end
 
     def send_password_reset
-      random_string = SecureRandom.hex
-      self.password = random_string
-      if self.save
-        UserMailer.send_password_reset(email, random_string)
-      end
+      Api::V1::ResetPasswordService.reset_password(self)
     end
 
     private
 
     def initialize_badges
-      movements = [["Fran Time","Do you even WOD, bro?"],
-                   ["500m Row Time", "Endurance"],
-                   ["Back Squat 1RM", "Strength"],
-                   ["Clean and Jerk 1RM", "Olympic"],
-                   ["Unbroken Pull Ups", "Gymnastic"]]
-      movements.each do |m|
-        new_badge = {
-          name: m[0],
-          description: m[1],
-          ranking: "Unranked",
-          ranking_value: 0,
-          user_id: self.id
-        }
-        Badge.create(new_badge)
+      if self.crossfitter
+        movements = [["Fran Time","Do you even WOD, bro?"],
+                     ["500m Row Time", "Endurance"],
+                     ["Back Squat 1RM", "Strength"],
+                     ["Clean and Jerk 1RM", "Olympic"],
+                     ["Unbroken Pull Ups", "Gymnastic"]]
+        movements.each do |m|
+          new_badge = {
+            name: m[0],
+            description: m[1],
+            ranking: "Unranked",
+            ranking_value: 0,
+            user_id: self.id
+          }
+          Badge.create(new_badge)
+        end
       end
     end
 

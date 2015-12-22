@@ -21,10 +21,10 @@ class ApplicationController < ActionController::Base
             raise NotAuthenticatedError
     end
 
-    def authorize_request!
+    def authorize_request!(id)
         fail NotAuthenticatedError unless user_id_included_in_auth_token?
         @current_user = User.find(decoded_auth_token[:user_id])
-        fail NotAuthorizedError unless @current_user.id.to_s == params[:id]
+        fail NotAuthorizedError unless @current_user.id.to_s == id
         rescue JWT::ExpiredSignature
             raise AuthenticationTimeoutError
         rescue JWT::VerificationError, JWT::DecodeError

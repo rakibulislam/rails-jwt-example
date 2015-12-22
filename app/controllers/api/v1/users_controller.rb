@@ -34,7 +34,7 @@ class Api::V1::UsersController < ApplicationController
 
     def update
       begin
-        authorize_request!
+        authorize_request!(params[:id])
           user = User.find(params[:id])
           user.update(user_params)
           render(
@@ -49,21 +49,20 @@ class Api::V1::UsersController < ApplicationController
         forbidden_resource
       rescue AuthenticationTimeoutError
         authentication_timeout
-      rescue RecordNotFound
+      rescue ActiveRecord::RecordNotFound
         resource_not_found
       end
     end
 
     def destroy
       begin
-        authorize_request!
+        authorize_request!(params[:id])
           user = User.find(params[:id])
-            user.delete
-            Badge.destroy_all(user_id: params[:id])
-            render(
-              root: false,
-              status: :ok,
-              json: {message: "Removed"},
+          user.destroy
+          render(
+            root: false,
+            status: :ok,
+            json: {message: "Removed"},
           )
       rescue NotAuthenticatedError
         user_not_authenticated
@@ -71,7 +70,7 @@ class Api::V1::UsersController < ApplicationController
         forbidden_resource
       rescue AuthenticationTimeoutError
         authentication_timeout
-      rescue RecordNotFound
+      rescue ActiveRecord::RecordNotFound
         resource_not_found
       end
     end
@@ -79,7 +78,7 @@ class Api::V1::UsersController < ApplicationController
     private
 
     def user_params
-        params.permit(:first_name, :last_name, :email, :phone, :home_gym, :password)
+        params.permit(:first_name, :last_name, :email, :phone, :home_gym, :password, :gender, :is_crossfitter, :is_box_owner)
     end
 
 

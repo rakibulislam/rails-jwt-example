@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151215180912) do
+ActiveRecord::Schema.define(version: 20151222192012) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -27,6 +27,29 @@ ActiveRecord::Schema.define(version: 20151215180912) do
     t.integer  "ranking_value"
   end
 
+  create_table "boxes", force: :cascade do |t|
+    t.string   "name"
+    t.string   "phone"
+    t.string   "email"
+    t.string   "address"
+    t.string   "unit"
+    t.string   "city"
+    t.string   "zip"
+    t.integer  "user_id",    null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.string   "state"
+  end
+
+  create_table "business_hours", force: :cascade do |t|
+    t.integer  "box_id",     null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.integer  "day"
+    t.integer  "close_time"
+    t.integer  "open_time"
+  end
+
   create_table "users", force: :cascade do |t|
     t.string   "email"
     t.string   "phone"
@@ -38,6 +61,8 @@ ActiveRecord::Schema.define(version: 20151215180912) do
     t.string   "password_digest"
     t.float    "overall_ranking", default: 0.0, null: false
     t.string   "gender"
+    t.boolean  "is_crossfitter"
+    t.boolean  "is_box_owner"
   end
 
 end

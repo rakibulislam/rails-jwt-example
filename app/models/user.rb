@@ -3,14 +3,16 @@ class User < ActiveRecord::Base
     validates :last_name, presence: true
     validates :email, presence: true, uniqueness: true
     validates :phone, presence: true
+    validates :gender, presence: true
 
-    has_many :badges
+    has_many :badges, dependent: :destroy
+    has_many :boxes
     accepts_nested_attributes_for :badges
 
     has_secure_password
 
     after_create :initialize_badges
-    before_save :downcase_email
+    before_save :downcase_fields
 
     def self.find_by_credentials(email, password)
         user = User.find_by_email(email)
@@ -28,7 +30,7 @@ class User < ActiveRecord::Base
     private
 
     def initialize_badges
-      if self.crossfitter
+      if self.is_crossfitter
         movements = [["Fran Time","Do you even WOD, bro?"],
                      ["500m Row Time", "Endurance"],
                      ["Back Squat 1RM", "Strength"],
@@ -47,7 +49,10 @@ class User < ActiveRecord::Base
       end
     end
 
-    def downcase_email
-      self.email = self.email.downcase
+    def downcase_fields
+      self[:email] = self[:email].downcase
+      self[:first_name] = self[:first_name].downcase
+      self[:last_name] = self[:last_name].downcase
+      # self[:gender] = self[:gender].downcase
     end
 end

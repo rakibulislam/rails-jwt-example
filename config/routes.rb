@@ -6,8 +6,10 @@ Rails.application.routes.draw do
     namespace :api do
       namespace :v1 do
         resources :users
+
         patch 'users/:id/badges' => 'badges#update'
-        get 'users/:id/badges' => 'badges#index'
+
+        post 'users/:user_id/boxes' => 'boxes#create'
       end
     end
 end

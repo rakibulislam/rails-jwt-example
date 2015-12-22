@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  day: MyString
+  box_id: 1
+  close_time: 2015-12-22 11:35:57
+  open_time: 2015-12-22 11:35:57
+
+two:
+  day: MyString
+  box_id: 1
+  close_time: 2015-12-22 11:35:57
+  open_time: 2015-12-22 11:35:57

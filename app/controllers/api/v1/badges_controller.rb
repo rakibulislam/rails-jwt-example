@@ -17,6 +17,7 @@ class Api::V1::BadgesController < ApplicationController
           end
         end
       end
+      user.calc_overall_ranking
       render(
           root: false,
           status: :ok,

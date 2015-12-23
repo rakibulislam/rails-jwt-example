@@ -27,6 +27,18 @@ class User < ActiveRecord::Base
       Api::V1::ResetPasswordService.reset_password(self)
     end
 
+    def calc_overall_ranking
+      sum = 0.0
+      self.badges.each do |badge|
+        if badge[:ranking_value] != nil
+          sum += badge[:ranking_value]
+        end
+      end
+      binding.pry
+      avg = sum / self.badges.count
+      self.update(overall_ranking: avg)
+    end
+
     private
 
     def initialize_badges

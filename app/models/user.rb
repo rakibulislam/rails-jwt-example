@@ -15,7 +15,7 @@ class User < ActiveRecord::Base
     before_save :downcase_fields
 
     def self.find_by_credentials(email, password)
-        user = User.find_by_email(email)
+        user = User.find_by_email(email.downcase!)
         if user.authenticate(password)
             user
         else
@@ -34,9 +34,16 @@ class User < ActiveRecord::Base
           sum += badge[:ranking_value]
         end
       end
-      binding.pry
       avg = sum / self.badges.count
-      self.update(overall_ranking: avg)
+      if avg < 1
+        self.update(overall_ranking_value: avg, overall_ranking: "Beginner")
+      elsif (avg < 2) && (avg >= 1)
+        self.update(overall_ranking_value: avg, overall_ranking: "Intermediate")
+      elsif (avg < 3) && (avg >= 2)
+        self.update(overall_ranking_value: avg, overall_ranking: "RX")
+      elsif (avg >= 3)
+        self.update(overall_ranking_value: avg, overall_ranking: "Elite")
+      end
     end
 
     private
@@ -52,12 +59,13 @@ class User < ActiveRecord::Base
           new_badge = {
             name: m[0],
             description: m[1],
-            ranking: "Unranked",
+            ranking: "Beginner",
             ranking_value: 0,
             user_id: self.id
           }
           Badge.create(new_badge)
         end
+        self.calc_overall_ranking
       end
     end
 
@@ -65,6 +73,5 @@ class User < ActiveRecord::Base
       self[:email] = self[:email].downcase
       self[:first_name] = self[:first_name].downcase
       self[:last_name] = self[:last_name].downcase
-      # self[:gender] = self[:gender].downcase
     end
 end

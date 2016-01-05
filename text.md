@@ -29,17 +29,35 @@ User.create({
     is_crossfitter: false,
     is_box_owner: true
 })
-Box.create({
-  name: "Derek Zoolander's center for kids who can't read good",
+User.create({
+    first_name: "Other",
+    last_name: "Guy",
+    gender: "Male",
+    email: "dude@crossfit.com",
+    password: "pass",
+    phone: "3138984244",
+    is_crossfitter: false,
+    is_box_owner: true
+})
+User.last.boxes.create({
+  name: "Other's Place",
   phone: "2879876655",
   email: "gym@gym.com",
-  address: "525 nw 5th ave",
-  city: "Ft Lauderdale",
-  zip: "33301",
+  address: "198 Nw 7th St",
+  city: "Boca Raton",
+  zip: "33432",
+  state: "FL"
+})
+Box.create({
+  name: "Davids Place",
+  phone: "2879876655",
+  email: "gym@gym.com",
+  address: "351 Club Cir",
+  city: "Boca Raton",
+  unit: "206"
+  zip: "33487",
+  state: "FL",
   user_id: 12,
-  business_hours_attributes: [
-    {day: 0, close_time: 8389, open_time: 99999}
-  ]
 })
 
 POST NEW Box

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151222192012) do
+ActiveRecord::Schema.define(version: 20160105213135) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -39,6 +39,8 @@ ActiveRecord::Schema.define(version: 20151222192012) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string   "state"
+    t.float    "latitude"
+    t.float    "longitude"
   end
 
   create_table "business_hours", force: :cascade do |t|
@@ -50,19 +52,31 @@ ActiveRecord::Schema.define(version: 20151222192012) do
     t.integer  "open_time"
   end
 
+  create_table "klasses", force: :cascade do |t|
+    t.integer  "box_id",      null: false
+    t.string   "day",         null: false
+    t.integer  "start_time",  null: false
+    t.integer  "end_time",    null: false
+    t.string   "description"
+    t.string   "name",        null: false
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+  end
+
   create_table "users", force: :cascade do |t|
     t.string   "email"
     t.string   "phone"
     t.string   "home_gym"
-    t.datetime "created_at",                    null: false
-    t.datetime "updated_at",                    null: false
+    t.datetime "created_at",                          null: false
+    t.datetime "updated_at",                          null: false
     t.string   "first_name"
     t.string   "last_name"
     t.string   "password_digest"
-    t.float    "overall_ranking", default: 0.0, null: false
     t.string   "gender"
     t.boolean  "is_crossfitter"
     t.boolean  "is_box_owner"
+    t.string   "overall_ranking"
+    t.float    "overall_ranking_value", default: 0.0
   end
 
 end

@@ -1,13 +1,37 @@
 class Api::V1::BoxOwnersController < ApplicationController
 
+  # before_action :authorize_request, only: [:show, :index]
 
   def create
-    box = Box.create(box_params)
+    # @box = Box.create(box_params)
+    #
+    # render(
+    #   root: false,
+    #   status: :created,
+    #   json: box,
+    #   serializer: Api::V1::BoxSerializer
+    # )
+    # @box = Box.new(box_params)
+    # @box.images.build(params[:images_attributes][0])
+    # @box.save
+    @box = Box.new({
+      "name": params[:name],
+      "phone": params[:phone],
+      "email": params[:email],
+      "address": params[:address] ,
+      "city": params[:city],
+      "state": params[:state],
+      "zip": params[:zip]
+    })
+    @box.images.new({
+      image: params["images_attributes"][0][:image]
+    })
+    @box.save
 
     render(
       root: false,
       status: :created,
-      json: box,
+      json: @box,
       serializer: Api::V1::BoxSerializer
     )
   end
@@ -57,7 +81,7 @@ class Api::V1::BoxOwnersController < ApplicationController
 
   private
 
-  def box_params
-    params.permit(:id, :name, :phone, :email, :address, :unit, :city, :state, :zip, :user_id)
-  end
+  # def box_params
+  #   params.permit(:id, :box_owner, :name, :phone, :email, :address, :unit, :city, :state, :zip, :user_id, :images_attributes => [:image])
+  # end
 end

@@ -13,6 +13,7 @@ gem 'pry-rails'
 gem 'dotenv-rails', :groups => [:development, :test]
 gem 'letter_opener', :group => :development
 gem 'geocoder'
+gem "paperclip", "~> 4.3"
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug'

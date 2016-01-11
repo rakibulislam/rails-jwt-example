@@ -67,6 +67,7 @@ POST NEW Box
   "email": "gym@gym.com",
   "address": "525 nw 5th ave",
   "city": "Ft Lauderdale",
+  "state": "FL",
   "zip": "33301",
   "business_hours_attributes": [
     {"day": 0, "close_time": 8389, "open_time": 99999}

@@ -21,6 +21,14 @@ class ApplicationController < ActionController::Base
             raise NotAuthenticatedError
     end
 
+    def authorize_request
+      if params[:user_id]
+        authorize_request!(params[:user_id])
+      else
+        authorize_request!(params[:id])
+      end
+    end
+
     def authorize_request!(id)
         fail NotAuthenticatedError unless user_id_included_in_auth_token?
         @current_user = User.find(decoded_auth_token[:user_id])

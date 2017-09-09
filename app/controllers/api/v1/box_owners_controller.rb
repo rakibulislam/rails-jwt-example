@@ -3,30 +3,9 @@ class Api::V1::BoxOwnersController < ApplicationController
   # before_action :authorize_request, only: [:show, :index]
 
   def create
-    # @box = Box.create(box_params)
-    #
-    # render(
-    #   root: false,
-    #   status: :created,
-    #   json: box,
-    #   serializer: Api::V1::BoxSerializer
-    # )
-    # @box = Box.new(box_params)
-    # @box.images.build(params[:images_attributes][0])
-    # @box.save
-    @box = Box.new({
-      "name": params[:name],
-      "phone": params[:phone],
-      "email": params[:email],
-      "address": params[:address] ,
-      "city": params[:city],
-      "state": params[:state],
-      "zip": params[:zip]
-    })
-    @box.images.new({
-      image: params["images_attributes"][0][:image]
-    })
-    @box.save
+    @box = Box.create(box_params)
+    puts "@box: #{@box.inspect}"
+    puts "@box.images: #{@box.images.inspect}"
 
     render(
       root: false,
@@ -34,6 +13,30 @@ class Api::V1::BoxOwnersController < ApplicationController
       json: @box,
       serializer: Api::V1::BoxSerializer
     )
+
+    # @box = Box.new(box_params)
+    # @box.images.build(params[:images_attributes][0])
+    # @box.save
+    # @box = Box.new({
+    #   "name": params[:name],
+    #   "phone": params[:phone],
+    #   "email": params[:email],
+    #   "address": params[:address],
+    #   "city": params[:city],
+    #   "state": params[:state],
+    #   "zip": params[:zip]
+    # })
+
+    # @box.images.new({
+    #   image: params["images_attributes"][0][:image]
+    # })
+
+    # render(
+    #   root: false,
+    #   status: :created,
+    #   json: @box,
+    #   serializer: Api::V1::BoxSerializer
+    # )
   end
 
   def update
@@ -81,7 +84,7 @@ class Api::V1::BoxOwnersController < ApplicationController
 
   private
 
-  # def box_params
-  #   params.permit(:id, :box_owner, :name, :phone, :email, :address, :unit, :city, :state, :zip, :user_id, :images_attributes => [:image])
-  # end
+  def box_params
+    params.permit(:id, :box_owner, :name, :phone, :email, :address, :unit, :city, :state, :zip, :user_id, :images_attributes => [:image])
+  end
 end
